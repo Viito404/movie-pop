@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./paginacao.component.css']
 })
 export class PaginacaoComponent {
+page: number;
 
+constructor(){
+  this.page = 1;
+}
 }

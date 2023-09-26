@@ -1,1 +1,25 @@
-<p>home works!</p>
+
+<section class="row gap-3">
+  <div class="container-fluid px-md-5 py-5 bg-div">
+    <app-letreiro-filmes></app-letreiro-filmes>
+  </div>
+  <div class="col col-lg-10 d-grid gap-5">
+    <div class="d-flex gap-3">
+      <a class="btn btn-outline-light fw-semibold btn-sm fs-4 rounded-2 text-center" routerLink="/">
+        Mais Populares
+      </a>
+      <a class="btn btn-outline-light fw-semibold btn-sm fs-4 rounded-2 text-center" routerLink="/">
+        Mais Vistos
+      </a>
+
+      <a class="btn btn-outline-light fw-semibold btn-sm fs-4 rounded-2 text-center" routerLink="/">
+        Meus Favoritos
+      </a>
+    </div>
+
+    <nav class="container-fluid ">
+    <app-paginacao></app-paginacao>
+    </nav>
+    </div>
+    <app-lista-filme></app-lista-filme>
+</section>

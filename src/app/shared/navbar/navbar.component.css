@@ -1,0 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+.gradiente-navbar {
+  background: rgb(29,2,28);
+  background: linear-gradient(90deg, rgba(29,2,28,1) 13%, rgba(19,17,19,1) 100%);
+}
+.fonte-titulo {
+  font-family: "Press Start 2P", cursive;
+}

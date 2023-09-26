@@ -1,0 +1,6 @@
+.bg-div{
+  background-image: url('https://www.strappinc.com/wp-content/uploads/2019/08/netflix.jpg'); 
+  background-size:cover; 
+  background-repeat: no-repeat; 
+  height: 250px; 
+}

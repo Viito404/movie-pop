@@ -1,1 +1,15 @@
+@import url("bootstrap-icons/font/bootstrap-icons.min.css");
+
+.gradiente-back {
+  background: rgb(22, 3, 47);
+  background: linear-gradient(
+    90deg,
+    rgba(22, 3, 47, 1) 0%,
+    rgba(40, 5, 57, 1) 50%,
+    rgba(29, 1, 28, 1) 100%
+  );
+}
+/* *{
+  outline: 1px red solid
+} */
 /* You can add global styles to this file, and also import other style files */
