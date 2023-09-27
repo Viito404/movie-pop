@@ -23,15 +23,14 @@ export class FilmeService {
     .pipe(map((obj: any)=> this.mapearDetalhesFilme(obj)))
   }
 
-  public selecionarTrailersPorId(id:number): Observable<TrailerFilme>{
+  public selecionarTrailersPorId(id:number): Observable<any>{
     const url = `https://api.themoviedb.org/3/movie/${id}/videos?language=pt-BR`;
 
-    return this.http.get<any>(url, this.obterAutorizacao())
-    .pipe(map((obj: any) => this.mapearTrailersFilme(obj)))
+    return this.http.get<any>(url, this.obterAutorizacao()).pipe(
+      map(obj => obj.results),
+      map(obj => this.mapearTrailersFilme(obj)),
+  );
   }
-
-
-
 
   public selecionarPopulares(): Observable<ListagemFilme[]> {
     const url = `https://api.themoviedb.org/3/movie/popular?language=pt-BR`;
@@ -73,13 +72,10 @@ export class FilmeService {
       urlDetalhes: `detalhes.html?id=${obj.id}`
     };
 }
-private mapearTrailersFilme(obj: any): TrailerFilme{
-  return {
-    id: obj.id,
-    sourceUrl: obj.key
-  };
-}
+mapearTrailersFilme(obj: any[]): string {
 
+  return obj.find(t => t.type === "Trailer" || t.type === "Teaser" || t.name.includes('Dub') || t.name.includes('DUB')) as string;
+}
 private mapearDetalhesFilme(obj: any): DetalhesFilme{
   return {
     id: obj.id,
@@ -90,9 +86,8 @@ private mapearDetalhesFilme(obj: any): DetalhesFilme{
     urlSlide: "https://image.tmdb.org/t/p/original/" + obj.backdrop_path,
     mediaNota: obj.vote_average,
     contagemVotos: obj.vote_count,
-
-    generos: obj.genre_ids
+    favoritado: false,
+    generos: obj.genres.map((genero:any) => genero.name)
   };
-}
-    
+}    
 }

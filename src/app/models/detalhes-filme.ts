@@ -11,7 +11,8 @@ export class DetalhesFilme {
   contagemVotos: number;
 
   generos: string[];
-  
+  favoritado: boolean = false;
+
   constructor(id: number, titulo: string, sinopse: string, 
     dataLancamento: string, urlPoster: string, urlSlide: string,
     mediaNota: number, contagemVotos: number, generos: string[])

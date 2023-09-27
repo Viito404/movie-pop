@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ListagemFilme } from "../models/listagem-filme";
+import { DetalhesFilme } from "../models/detalhes-filme";
 
 @Injectable({
   providedIn: 'root', // App module
@@ -8,14 +9,14 @@ export class LocalStorageService {
 private readonly localStorage: Storage;
 private readonly storageKey: string = 'apmdb_favoritos@2.0';
 
-private favoritos: ListagemFilme[];
+private favoritos: DetalhesFilme[];
 
 constructor(){
   this.localStorage = window.localStorage;
   this.favoritos = this.carregarFavoritos();
 }
 
-public favoritar(filme: ListagemFilme): void{
+public favoritar(filme: DetalhesFilme): void{
   if(this.favoritos.find((favorito):boolean => favorito.id == filme.id)) return;
 
   this.favoritos.push(filme);
@@ -27,23 +28,23 @@ this.favoritos = this.favoritos.filter((x): boolean => x.id != id)
 this.gravar();
 }
 
-public carregarFavoritos(): ListagemFilme[] {
+public carregarFavoritos():DetalhesFilme[] {
   const dados = this.localStorage.getItem(this.storageKey);
 
   if(!dados) return [];
 
   const objetos = JSON.parse(dados);
 
-  const filmes = new Array<ListagemFilme>();
+  const filmes = new Array<DetalhesFilme>();
 
   for(const obj of objetos){
-    filmes.push(new ListagemFilme(obj.id, obj.titulo, obj.sinopse, obj.urlPoster, obj.url));
+    filmes.push(new DetalhesFilme(obj.id, obj.titulo, obj.sinopse, obj.dataLancamento, obj.urlPoster, obj.urlSlide, obj.mediaNota, obj.contagemVotos, obj.generos));
   }
 
   return filmes;
 }
 
-public selecionarPorId(id: number): ListagemFilme | undefined {
+public selecionarPorId(id: number): DetalhesFilme | undefined {
   return this.favoritos.find((x):boolean => x.id == id);
 }
 

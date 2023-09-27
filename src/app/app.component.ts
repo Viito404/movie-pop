@@ -13,7 +13,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     // this.testService.selecionarFilmes().subscribe((res) => console.log(res));
-    this.testService.selecionarTrailers(565770).subscribe((res) => console.log(res))
+    this.testService.selecionarTrailers(976573).subscribe((res) => console.log(res))
   }
 
 }

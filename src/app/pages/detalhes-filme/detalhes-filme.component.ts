@@ -1,8 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { DetalhesFilme } from 'src/app/models/detalhes-filme';
+import { ListagemFilme } from 'src/app/models/listagem-filme';
 import { TrailerFilme } from 'src/app/models/trailer-filme';
 import { FilmeService } from 'src/app/services/filme.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-detalhes-filme',
@@ -16,31 +19,37 @@ export class DetalhesFilmeComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private filmeService: FilmeService
+    private filmeService: FilmeService,
+    private sanitizer: DomSanitizer,
+    private storageService: LocalStorageService
   ) 
   {
     this.filme = new DetalhesFilme(0, '', '', '', '', '', 0, 0, []);
-    this.trailer = new TrailerFilme(0,'');
+    this.trailer = new TrailerFilme(0,'')
   }
 
   ngOnInit(): void {
-    this.selecionarFilmePorId();
-    this.selecionarTrailerPorId();
+    const id = parseInt(this.route.snapshot.paramMap.get('id')!);
+    this.selecionarFilmePorId(id);
+    this.selecionarTrailerPorId(id);
   }
 
-  selecionarFilmePorId() {
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!);
-
+  selecionarFilmePorId(id:number) {
     this.filmeService.selecionarPorId(id).subscribe((filme: DetalhesFilme) => {
       this.filme = filme;
+      console.log(filme);
     });
   }
 
-  selecionarTrailerPorId(){
-    const id = parseInt(this.route.snapshot.paramMap.get('id')!);
+  selecionarTrailerPorId(id:number){
+    this.filmeService.selecionarTrailersPorId(id).subscribe((trailer) => {
+      console.log(trailer);
+      this.trailer.sourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + trailer.key) as string;
+    })
+  }
 
-    this.filmeService.selecionarTrailersPorId(id).subscribe((trailer: TrailerFilme) => {
-      this.trailer = trailer;
-    });
+  favoritarFilme(filme: DetalhesFilme){
+    this.storageService.favoritar(filme);
+    this.filme.favoritado = true;
   }
 }

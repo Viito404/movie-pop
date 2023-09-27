@@ -4,6 +4,6 @@ export class TrailerFilme {
 
   constructor(id:number, sourceUrl:string){
     this.id = id;
-    this.sourceUrl = `https://www.youtube.com/embed/${sourceUrl}`;
+    this.sourceUrl = sourceUrl;
   }
 }
